@@ -1,0 +1,14 @@
+# build outputs
+/dist/
+/api/webdist/*
+!/api/webdist/index.html
+/web/node_modules/
+/android/.gradle/
+/android/build/
+/android/app/build/
+/android/local.properties
+/android/app/libs/*.aar
+/android/app/libs/*.jar
+# runtime data
+/data/
+*.jks

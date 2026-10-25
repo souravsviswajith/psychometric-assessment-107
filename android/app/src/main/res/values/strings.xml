@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Career Assessment</string>
+    <string name="starting">Starting the assessment runtime…</string>
+    <string name="start_failed">The assessment runtime could not start: %1$s</string>
+</resources>

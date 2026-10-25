@@ -1,0 +1,292 @@
+{
+  "generatedAt": "2026-10-03T09:50:38.625Z",
+  "digestAlgorithm": "sha256",
+  "digestStrength": "cryptographic",
+  "reproducibility": {
+    "reproducible": true,
+    "details": [
+      "identities reproduced across two runs: 5 signals, 5 representations"
+    ]
+  },
+  "results": [
+    {
+      "id": "A",
+      "title": "Information preservation: raw → scalar vs raw → (A, E, C) | U",
+      "hypothesis": "Compressing an observation into a single scalar discards provenance, method, temporal, quality, context, and uncertainty information that a reviewer needs in order to interpret it.",
+      "method": "Enumerate recoverable facts from each raw observation, then check which of those facts are recoverable from the 1:3 representation and from a scalar mean of response positions. Compare counts.",
+      "measures": [
+        {
+          "label": "facts enumerated from the raw observations",
+          "value": 209,
+          "unit": "facts"
+        },
+        {
+          "label": "facts recoverable from (A, E, C) | U",
+          "value": 204,
+          "unit": "facts",
+          "note": "recoverability is checked by set membership against the primitive values recorded in the representation"
+        },
+        {
+          "label": "facts recoverable from the scalar compression",
+          "value": 0,
+          "unit": "facts",
+          "note": "the scalar is 0.7500 (mean of 5 positions) plus an observation count"
+        },
+        {
+          "label": "information lost by scalar compression",
+          "value": 100,
+          "unit": "%"
+        },
+        {
+          "label": "scalar value",
+          "value": 0.75,
+          "note": "shown to make the compression concrete; it is not stored anywhere in the system"
+        }
+      ],
+      "observations": [
+        "Each observation contributes 42 recoverable facts on average.",
+        "Not every enumerated fact is recoverable, and the exceptions are recorded rather than hidden: source.label. The human-readable source label is a display convenience; the representation keeps the stable source reference instead.",
+        "Scalar compression retains the aggregate reading and the count, but none of the enumerated facts: provenance, method version, timestamps, quality metadata, context fields, and uncertainty are all unrecoverable from it.",
+        "The (A, E, C) | U representation retains the raw response alongside its interpretation policy, so a reviewer can recompute the reading rather than trust it."
+      ],
+      "limitations": [
+        "Fact counts are a proxy for information content: they measure the recoverability of enumerated facts, not the semantic value of the information.",
+        "The enumeration is authored by this project; a different enumeration would change the percentages while leaving the ordering (1:3 ≫ scalar) unchanged.",
+        "This experiment says nothing about whether the facts are the *right* facts to record for career assessment."
+      ],
+      "status": "measured",
+      "ranAt": "2026-10-03T09:50:38.605Z",
+      "fixtureRef": "research-fixture@1.0.0(subject=sub_research-fixture)"
+    },
+    {
+      "id": "B",
+      "title": "Provenance recovery with and without the E facet",
+      "hypothesis": "Removing the evidence facet destroys a reviewer’s ability to establish source, method, timestamp, version, and evidence quality.",
+      "method": "Render every representation twice (E present, E restricted) and count how many of six provenance questions the rendered output can answer.",
+      "measures": [
+        {
+          "label": "provenance questions per representation",
+          "value": 6,
+          "unit": "questions"
+        },
+        {
+          "label": "questions answerable with E present",
+          "value": 30,
+          "unit": "answers",
+          "note": "of 30"
+        },
+        {
+          "label": "questions answerable with E restricted",
+          "value": 10,
+          "unit": "answers",
+          "note": "of 30"
+        },
+        {
+          "label": "provenance recovery rate with E present",
+          "value": 100,
+          "unit": "%"
+        },
+        {
+          "label": "provenance recovery rate with E restricted",
+          "value": 33.3,
+          "unit": "%"
+        },
+        {
+          "label": "weakest provenance question",
+          "value": "Where did this observation come from?",
+          "note": "the question least often answerable from a full render"
+        }
+      ],
+      "observations": [
+        "With E present, every provenance question is answerable, including the method’s declared limitations.",
+        "With E restricted, the questions that remain answerable are: method, timestamp. Where a question survives restriction it is because another facet leaked the answer, not because E is unnecessary.",
+        "The observed leakage is informative: the assessment facet carries the observation timestamp, and uncertainty notes quote the collection method in their detail text. Provenance therefore cannot be \"removed\" by hiding one facet — it has to be replaced by an explicit statement of what is unknown.",
+        "The residual (what survives restriction) is exactly the part of a claim that can be copied out of the system and still look authoritative — which is why provenance is a first-class facet rather than a UI detail."
+      ],
+      "limitations": [
+        "The questions are authored by this project; a different question set would produce different rates.",
+        "The renderer is the system’s own reader: a reviewer reading raw JSON might recover more or less.",
+        "This measures recoverability from the representation, not whether a human reviewer actually reads the evidence."
+      ],
+      "status": "measured",
+      "ranAt": "2026-10-03T09:50:38.607Z",
+      "fixtureRef": "research-fixture@1.0.0(subject=sub_research-fixture)"
+    },
+    {
+      "id": "C",
+      "title": "Context dependence with the assessment held constant",
+      "hypothesis": "Interpretation that is legitimately context-dependent must change when C changes while A is held constant, and the change must be explicit rather than silent.",
+      "method": "Build three fixtures with identical responses and progressively thinner context, map each to pathways through the real capability, and compare requirement statuses, uncertainty codes, and pathway restrictions.",
+      "measures": [
+        {
+          "label": "assessment facet identical across context variants",
+          "value": true,
+          "note": "A held constant by construction"
+        },
+        {
+          "label": "context facets differ",
+          "value": true
+        },
+        {
+          "label": "requirement statuses that changed to \"undetermined\" when context was removed",
+          "value": 8,
+          "unit": "requirements"
+        },
+        {
+          "label": "new uncertainty codes when context was removed",
+          "value": "U-CONTEXT-UNDECLARED"
+        },
+        {
+          "label": "restrictions attached to pathways (declared → removed)",
+          "value": "2 → 3",
+          "unit": "restriction entries"
+        }
+      ],
+      "observations": [
+        "context declared: supported 13, gap 0, conflicting 0, undetermined 27",
+        "context thinned: supported 5, gap 0, conflicting 0, undetermined 35",
+        "context removed: supported 5, gap 0, conflicting 0, undetermined 35",
+        "Holding A constant while changing C changes what the mapping is willing to say: requirements move to \"undetermined\" and additional uncertainty is recorded.",
+        "The mapping never silently absorbs the context change: it reports the change through uncertainty notes, requirement rationales, and pathway restrictions."
+      ],
+      "limitations": [
+        "The variants are synthetic context edits, not observed changes in a person’s situation.",
+        "Only the pathway mapping is measured; other transformations (for example model-assisted explanation) are not exercised here.",
+        "A finding that context matters for these items does not generalise to all career constructs."
+      ],
+      "status": "measured",
+      "ranAt": "2026-10-03T09:50:38.607Z",
+      "fixtureRef": "research-fixture@1.0.0(subject=sub_research-fixture) + context variants"
+    },
+    {
+      "id": "D",
+      "title": "Temporal comparison with assessment, evidence, and context tracked separately",
+      "hypothesis": "An unchanged reading across two sittings is not the same as an unchanged observation: evidence and context move independently, and the representation must show that separately.",
+      "method": "Capture and decompose the same item set twice with a fixed clock step, then compare the assessment reading, the evidence timestamps, the context delta, and the uncertainty codes for each item pair.",
+      "measures": [
+        {
+          "label": "observations compared",
+          "value": 5,
+          "unit": "pairs"
+        },
+        {
+          "label": "pairs with a changed assessment reading",
+          "value": 0,
+          "unit": "pairs"
+        },
+        {
+          "label": "pairs where the scalar view would report \"no change\"",
+          "value": 5,
+          "unit": "pairs",
+          "note": "a scalar comparison sees only the reading, not the evidence or context that moved"
+        },
+        {
+          "label": "pairs with a later evidence timestamp",
+          "value": 5,
+          "unit": "pairs"
+        },
+        {
+          "label": "pairs with changed context",
+          "value": 5,
+          "unit": "pairs"
+        },
+        {
+          "label": "pairs with changed uncertainty profile",
+          "value": 0,
+          "unit": "pairs"
+        },
+        {
+          "label": "instrument version held constant",
+          "value": true
+        }
+      ],
+      "observations": [
+        "Assessment readings changed in 0 of 5 pairs, while the evidence timestamps moved in 5 and the context changed in 5.",
+        "The three dimensions are tracked separately, so \"the answer did not change but the situation did\" is a representable state rather than an invisible one.",
+        "A re-assessment decision can therefore cite the temporal and contextual evidence rather than the reading alone — and the decision itself remains the user’s."
+      ],
+      "limitations": [
+        "The fixture’s second sitting reuses the same responses; this measures representation behaviour, not test–retest reliability of any instrument.",
+        "Two sittings cannot establish temporal stability; the experiment is a mechanism check, not a reliability study.",
+        "The instrument is unvalidated (see uncertainty notes), so no psychometric claim is made from these numbers."
+      ],
+      "status": "measured",
+      "ranAt": "2026-10-03T09:50:38.608Z",
+      "fixtureRef": "research-fixture@1.0.0(subject=sub_research-fixture) vs later sitting"
+    }
+  ],
+  "pathwayCoverage": {
+    "assessedConstructs": [
+      "constraint.schedule",
+      "experience.applied-projects",
+      "interest.analysis",
+      "skill.quantitative",
+      "style.collaboration"
+    ],
+    "unassessedConstructs": [
+      "constraint.geography",
+      "interest.building",
+      "interest.creation",
+      "interest.explanation",
+      "interest.organisation",
+      "interest.social",
+      "skill.facilitation",
+      "skill.tooling",
+      "skill.writing",
+      "style.depth",
+      "style.structure-preference",
+      "value.autonomy",
+      "value.impact",
+      "value.stability"
+    ],
+    "observationCount": 5,
+    "representationCount": 5
+  },
+  "fixtureSignals": [
+    {
+      "id": "sig_259efe4e93ab0c3c",
+      "itemRef": "itm-selfdesc-analysis-1",
+      "uncertainty": [
+        "U-SELF-REPORT-BIAS",
+        "U-INSTRUMENT-UNVALIDATED",
+        "U-METHOD-LIMITED"
+      ]
+    },
+    {
+      "id": "sig_6d87c12fcb918171",
+      "itemRef": "itm-skill-quantitative-1",
+      "uncertainty": [
+        "U-SELF-REPORT-BIAS",
+        "U-INSTRUMENT-UNVALIDATED",
+        "U-METHOD-LIMITED"
+      ]
+    },
+    {
+      "id": "sig_f930d092f8b4dacb",
+      "itemRef": "itm-selfdesc-collaboration-1",
+      "uncertainty": [
+        "U-SELF-REPORT-BIAS",
+        "U-INSTRUMENT-UNVALIDATED",
+        "U-METHOD-LIMITED"
+      ]
+    },
+    {
+      "id": "sig_19059672d7f0a734",
+      "itemRef": "itm-context-availability-1",
+      "uncertainty": [
+        "U-SELF-REPORT-BIAS",
+        "U-INSTRUMENT-UNVALIDATED",
+        "U-METHOD-LIMITED"
+      ]
+    },
+    {
+      "id": "sig_a5175d7c5678e22d",
+      "itemRef": "itm-experience-projects-1",
+      "uncertainty": [
+        "U-SELF-REPORT-BIAS",
+        "U-INSTRUMENT-UNVALIDATED",
+        "U-METHOD-LIMITED"
+      ]
+    }
+  ]
+}
