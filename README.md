@@ -122,4 +122,10 @@ Android's Back button steps back inside the app and leaves it from the home scre
 
 GPL-3.0-or-later (see `LICENSE`), as the original.
 
-Note: I was on a project I designed for a self-proclaimed career guru; it's not working out, so it's open source- do whatever you want with it
+## Development and Contribution Note
+
+Software development requires research, architectural reasoning, implementation, testing, and refinement; prompting an AI model alone does not guarantee a reliable application.
+
+The Go developer contributed the Go implementation after the initial project artifact was released; his work should be evaluated on code quality, engineering decisions, and demonstrable effort—not college prestige.
+
+Documentation and research synthesis were developed collaboratively by the project owner and ChatGPT (OpenAI), with ChatGPT contributing analysis, technical organization, and writing.
