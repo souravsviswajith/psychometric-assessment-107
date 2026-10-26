@@ -129,4 +129,4 @@ Software development requires research, architectural reasoning, implementation,
 The Go developer contributed the Go implementation after the initial project artifact was released; his work should be evaluated on code quality, engineering decisions, and demonstrable effort—not college prestige.
 
 Documentation and research synthesis were developed collaboratively by the project owner and ChatGPT (OpenAI), with ChatGPT contributing analysis, technical organization, and writing.
-while person whose responsibile didn't do anything people like these should be replaced with ai
+while person whose responsibile didn't do anything people like these should be replaced with ai not the other way 
