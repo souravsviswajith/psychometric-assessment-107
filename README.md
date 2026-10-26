@@ -130,3 +130,4 @@ The Go developer contributed the Go implementation after the initial project art
 
 Documentation and research synthesis were developed collaboratively by the project owner and ChatGPT (OpenAI), with ChatGPT contributing analysis, technical organization, and writing.
 while person whose responsibile didn't do anything people like these should be replaced with ai not the other way 
+of you want details just dm
