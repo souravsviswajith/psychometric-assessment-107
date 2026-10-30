@@ -122,7 +122,3 @@ Android's Back button steps back inside the app and leaves it from the home scre
 
 GPL-3.0-or-later (see `LICENSE`), as the original.
 
-## Development and Contribution Note
-
-every Open source project I've forked 
-that gave years worth of experience 
