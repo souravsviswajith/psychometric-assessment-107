@@ -124,6 +124,5 @@ GPL-3.0-or-later (see `LICENSE`), as the original.
 
 ## Development and Contribution Note
 
-Software development requires research, architectural reasoning, implementation, testing, and refinement; prompting an AI model alone does not guarantee a reliable application.
-
-The Go developer contributed the Go implementation after the initial project artifact was released; his work should be evaluated on code quality, engineering decisions, and demonstrable effort—not college prestige.
+every Open source project I've forked 
+that gave years worth of experience 
